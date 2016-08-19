@@ -1,19 +1,28 @@
 package hu.codecool.shop;
 
+import java.util.Vector;
+
 public class Shop {
 
 	private String name;
 	private String address;
 	private String owner;
-	private Milk[] milkBar;
+	private Vector<Milk> milkBar;
 	private int flag;
 	
-	public Shop(String name, String address, String owner, Milk[] milkBar) {
+	public Shop(String name, String address, String owner, Vector<Milk> milkBar) {
 		super();
 		this.name = name;
 		this.address = address;
 		this.owner = owner;
 		this.milkBar = milkBar;
+	}
+	
+	public Shop(String name, String address, String owner) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.owner = owner;
 	}
 
 	public String getName() {
@@ -29,19 +38,20 @@ public class Shop {
 	}
 	
 	public boolean hasMilk(){
-		return milkBar.length < 0;
+		return milkBar.size() < 0;
 	}
 	
 	public Milk buyMilk(Milk m){
-		Milk result = null;
-		for (int i=0; i<milkBar.length; i++)
-	    {
-	        if (milkBar[i] != null && milkBar[i].equals(m)) {
-	        	result = milkBar[i];
-	        	milkBar[i] = null;
-	        }
-	    }
+		if (milkBar.contains(m)){
+			Milk result = milkBar.elementAt(milkBar.indexOf(m));
+			milkBar.remove(m);
+			return result;
+		}
 
-	    return result;
+	    return null;
+	}
+	
+	public void supplyWithMilk(Milk m){
+		milkBar.addElement(m);
 	}
 }
