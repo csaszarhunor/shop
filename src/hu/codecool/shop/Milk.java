@@ -4,25 +4,23 @@ import java.util.Date;
 
 public class Milk {
 
-	private long barCode;
 	final int LITER = 1000;
 	final int HALFLITER = 500;
 	final int GLASS = 250;
 	final double FAT = 2.8;
 	final double SEMISKIMMED = 1.5;
-	private int capacity;
-	private String producer;
-	private Date expiration;
-	private double fatContent;
-	private long price;
+	protected long barCode;
+	protected int quantity;
+	protected String producer;
+	protected Date expiration;
+	protected double fatContent;
 	
-	public Milk(long barCode, int capacity, String producer, Date expiration, double fatContent, long price) {
+	public Milk(long barCode, int capacity, String producer, Date expiration, double fatContent) {
 		this.barCode = barCode;
-		this.capacity = capacity;
+		this.quantity = capacity;
 		this.producer = producer;
 		this.expiration = expiration;
 		this.fatContent = fatContent;
-		this.price = price;
 	}
 	
 	public long getBarCode() {
@@ -33,8 +31,8 @@ public class Milk {
 		return expiration.before(new Date());
 	}
 
-	public int getCapacity() {
-		return capacity;
+	public int getQuantity() {
+		return quantity;
 	}
 
 	public String getProducer() {
@@ -49,13 +47,9 @@ public class Milk {
 		return fatContent;
 	}
 
-	public long getPrice() {
-		return price;
-	}
-
 	@Override
 	public String toString() {
-		return "Milk [capacity=" + capacity + ", producer=" + producer + ", expiration=" + expiration + ", fatContent="
-				+ fatContent + ", price=" + price + "]";
+		return "Milk [quantity=" + quantity + ", producer=" + producer + ", expiration=" + expiration + ", fatContent="
+				+ fatContent + "]";
 	}
 }
