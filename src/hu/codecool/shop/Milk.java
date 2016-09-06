@@ -2,7 +2,7 @@ package hu.codecool.shop;
 
 import java.util.Date;
 
-public class Milk {
+public abstract class Milk {
 
 	final int LITER = 1000;
 	final int HALFLITER = 500;
@@ -15,9 +15,9 @@ public class Milk {
 	protected Date expiration;
 	protected double fatContent;
 	
-	public Milk(long barCode, int capacity, String producer, Date expiration, double fatContent) {
+	public Milk(long barCode, int quantity, String producer, Date expiration, double fatContent) {
 		this.barCode = barCode;
-		this.quantity = capacity;
+		this.quantity = quantity;
 		this.producer = producer;
 		this.expiration = expiration;
 		this.fatContent = fatContent;
