@@ -1,65 +1,70 @@
 package hu.codecool.shop;
 
 import java.util.Hashtable;
+import java.util.Iterator;
 
 public class Shop {
 
 	private String name;
 	private String address;
 	private String owner;
-	private Hashtable<ShopRegistry, Milk> milkBar;
+	private Hashtable<Long, ShopRegistry> foodBar;
 	
+	/* !!! ShopRegistry doesn't distinguish foods by their expiration date:
+	 * Food items with the same barCode but different expiration date will count as equal,
+	 * which is all the same for me, the programmer, but it harms the business logic, 
+	 * since expired Milk objects will not differ from consumable Milk objects */
 	class ShopRegistry {
-		private Milk milk;
-		private int quantity;
-		int price;
+		private Food food;
+		private long quantity;
+		long price;
 		
-		public ShopRegistry(Milk milk, int capacity, int price) {
+		public ShopRegistry(Food food, long quantity, long price) {
 			super();
-			this.milk = milk;
-			this.quantity = capacity;
+			this.food = food;
+			this.quantity = quantity;
 			this.price = price;
 		}
 
-		public Milk getMilk() {
-			return milk;
+		public Food getFood() {
+			return food;
 		}
 
-		public void setMilk(Milk milk) {
-			this.milk = milk;
+		public void setFood(Food food) {
+			this.food = food;
 		}
 
-		public int getQuantity() {
+		public long getQuantity() {
 			return quantity;
 		}
 
-		public void setQuantity(int quantity) {
+		public void setQuantity(long quantity) {
 			this.quantity = quantity;
 		}
 		
-		public void incrementQuantity(int quantity) {
+		public void incrementQuantity(long quantity) {
 			this.quantity += quantity;
 		}
 
-		public void decrementQuantity(int quantity) {
+		public void decrementQuantity(long quantity) {
 			this.quantity -= quantity;
 		}
 
-		public int getPrice() {
+		public long getPrice() {
 			return price;
 		}
 
-		public void setPrice(int price) {
+		public void setPrice(long price) {
 			this.price = price;
 		}
 	}
 	
-	public Shop(String name, String address, String owner, Hashtable<ShopRegistry, Milk> milkBar) {
+	public Shop(String name, String address, String owner, Hashtable<Long, ShopRegistry> foodBar) {
 		super();
 		this.name = name;
 		this.address = address;
 		this.owner = owner;
-		this.milkBar = milkBar;
+		this.foodBar = foodBar;
 	}
 	
 	public Shop(String name, String address, String owner) {
@@ -67,7 +72,7 @@ public class Shop {
 		this.name = name;
 		this.address = address;
 		this.owner = owner;
-		milkBar = new Hashtable<>();
+		foodBar = new Hashtable<>();
 	}
 
 	public String getName() {
@@ -82,22 +87,41 @@ public class Shop {
 		return owner;
 	}
 	
-	public boolean hasMilk(){
-		return milkBar.size() > 0;
-	}
-	
-	public Milk buyMilk(long barCode){
-		if (milkBar.contains(barCode)){
-			Milk result = milkBar.get(barCode);
-			milkBar.remove(barCode);
-			return result;
+	private boolean hasGivenProduct(Class<? extends Food> o){
+		Iterator<ShopRegistry> regs = foodBar.values().iterator();
+		while (regs.hasNext()){
+			Class<? extends Food> c = regs.next().getFood().getClass();
+			if (o.isAssignableFrom(c)){
+				return true;
+			}
 		}
-
-	    return null;
+		return false;
 	}
 	
-	public void supplyWithMilk(Milk m){
-		ShopRegistry reg = new ShopRegistry(m, m.getQuantity(), 0);
-		milkBar.put(reg, m);
+	public boolean hasMilk(){
+		return hasGivenProduct(Milk.class);
 	}
+
+	public boolean hasCheese(){
+		return hasGivenProduct(Cheese.class);
+	}
+	
+	public void supplyWithFood(Long barCode, long quantity){
+		ShopRegistry reg = foodBar.get(barCode);
+		reg.incrementQuantity(quantity);
+	}
+	
+	public void supplyWithNewFood(Food f, long quantity, long price){
+		ShopRegistry reg = new ShopRegistry(f, quantity, price);
+		foodBar.put(f.getBarCode(), reg);
+	}
+	
+	public void removeFood(Long barCode){
+		foodBar.remove(barCode);
+	}
+
+	public void buyFood(Long barCode, long quantity){
+		foodBar.get(barCode).decrementQuantity(quantity);
+	}
+	
 }
