@@ -3,6 +3,9 @@ package hu.codecool.shop;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+import hu.codecool.shop.exceptions.NonExistingProductException;
+import hu.codecool.shop.exceptions.TooMuchDecrementException;
+
 public class Shop {
 
 	private String name;
@@ -46,7 +49,10 @@ public class Shop {
 			this.quantity += quantity;
 		}
 
-		public void decrementQuantity(long quantity) {
+		public void decrementQuantity(long quantity) throws TooMuchDecrementException {
+			if (this.quantity < quantity){
+				throw new TooMuchDecrementException("Not enough quantity to decrement");
+			}
 			this.quantity -= quantity;
 		}
 
@@ -90,8 +96,10 @@ public class Shop {
 	private boolean hasGivenProduct(Class<? extends Food> o){
 		Iterator<ShopRegistry> regs = foodBar.values().iterator();
 		while (regs.hasNext()){
-			Class<? extends Food> c = regs.next().getFood().getClass();
-			if (o.isAssignableFrom(c)){
+			ShopRegistry reg = regs.next();
+			Class<? extends Food> c = reg.getFood().getClass();
+			long quantity = reg.getQuantity();
+			if (o.isAssignableFrom(c) && quantity > 0l){
 				return true;
 			}
 		}
@@ -106,7 +114,10 @@ public class Shop {
 		return hasGivenProduct(Cheese.class);
 	}
 	
-	public void supplyWithFood(Long barCode, long quantity){
+	public void supplyWithFood(Long barCode, long quantity) throws NonExistingProductException{
+		if (!foodBar.containsKey(barCode)) {
+			throw new NonExistingProductException("No shop registry found with this barcode");
+		}
 		ShopRegistry reg = foodBar.get(barCode);
 		reg.incrementQuantity(quantity);
 	}
@@ -116,11 +127,17 @@ public class Shop {
 		foodBar.put(f.getBarCode(), reg);
 	}
 	
-	public void removeFood(Long barCode){
+	public void removeFood(Long barCode) throws NonExistingProductException {
+		if (!foodBar.containsKey(barCode)) {
+			throw new NonExistingProductException("No shop registry found with this barcode");
+		}
 		foodBar.remove(barCode);
 	}
 
-	public void buyFood(Long barCode, long quantity){
+	public void buyFood(Long barCode, long quantity) throws NonExistingProductException, TooMuchDecrementException {
+		if (!foodBar.containsKey(barCode)) {
+			throw new NonExistingProductException("No shop registry found with this barcode");
+		}
 		foodBar.get(barCode).decrementQuantity(quantity);
 	}
 	
