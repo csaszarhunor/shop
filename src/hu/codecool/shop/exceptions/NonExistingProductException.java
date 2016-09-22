@@ -1,6 +1,6 @@
 package hu.codecool.shop.exceptions;
 
-public class NonExistingProductException extends Exception{
+public class NonExistingProductException extends ShopException{
 
 	/**
 	 * 

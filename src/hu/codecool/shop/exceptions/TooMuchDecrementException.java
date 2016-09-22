@@ -1,6 +1,6 @@
 package hu.codecool.shop.exceptions;
 
-public class TooMuchDecrementException extends Exception {
+public class TooMuchDecrementException extends ShopException {
 	
 	/**
 	 * 

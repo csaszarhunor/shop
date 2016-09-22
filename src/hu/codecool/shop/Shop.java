@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import hu.codecool.shop.exceptions.NonExistingProductException;
+import hu.codecool.shop.exceptions.ShopException;
 import hu.codecool.shop.exceptions.TooMuchDecrementException;
 
 public class Shop {
@@ -134,7 +135,7 @@ public class Shop {
 		foodBar.remove(barCode);
 	}
 
-	public void buyFood(Long barCode, long quantity) throws NonExistingProductException, TooMuchDecrementException {
+	public void buyFood(Long barCode, long quantity) throws ShopException {
 		if (!foodBar.containsKey(barCode)) {
 			throw new NonExistingProductException("No shop registry found with this barcode");
 		}
