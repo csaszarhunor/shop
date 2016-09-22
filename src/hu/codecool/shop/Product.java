@@ -2,13 +2,13 @@ package hu.codecool.shop;
 
 import java.util.Date;
 
-public abstract class Food {
+public abstract class Product {
 
 	protected Long barCode;
 	protected String producer;
 	protected Date expiration;
 	
-	public Food(Long barCode, String producer, Date expiration) {
+	public Product(Long barCode, String producer, Date expiration) {
 		this.barCode = barCode;
 		this.producer = producer;
 		this.expiration = expiration;
@@ -18,7 +18,7 @@ public abstract class Food {
 		return barCode;
 	}
 
-	public boolean isConsumable(){
+	public boolean isUnExpired(){
 		return expiration.before(new Date());
 	}
 	
@@ -32,6 +32,6 @@ public abstract class Food {
 
 	@Override
 	public String toString() {
-		return "Food [barCode=" + barCode + ", producer=" + producer + ", expiration=" + expiration + "]";
+		return "Product [barCode=" + barCode + ", producer=" + producer + ", expiration=" + expiration + "]";
 	}
 }

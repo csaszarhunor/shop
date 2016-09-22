@@ -1,4 +1,4 @@
-package hu.codecool.shop;
+package hu.codecool.shop.products;
 
 import java.util.Date;
 

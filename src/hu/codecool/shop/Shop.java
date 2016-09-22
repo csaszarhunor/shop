@@ -4,8 +4,10 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import hu.codecool.shop.exceptions.NonExistingProductException;
-import hu.codecool.shop.exceptions.ShopException;
 import hu.codecool.shop.exceptions.TooMuchDecrementException;
+import hu.codecool.shop.products.Cheese;
+import hu.codecool.shop.products.Food;
+import hu.codecool.shop.products.Milk;
 
 public class Shop {
 

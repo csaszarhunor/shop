@@ -2,8 +2,9 @@ package hu.codecool.shop;
 
 import java.util.Date;
 
-import hu.codecool.shop.product.LongLifeMilk;
-import hu.codecool.shop.product.SemiLongLifeMilk;
+import hu.codecool.shop.products.Milk;
+import hu.codecool.shop.products.milk.LongLifeMilk;
+import hu.codecool.shop.products.milk.SemiLongLifeMilk;
 
 public class MilkFactory {
 

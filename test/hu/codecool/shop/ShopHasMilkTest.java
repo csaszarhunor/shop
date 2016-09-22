@@ -6,7 +6,8 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import hu.codecool.shop.product.LongLifeMilk;
+import hu.codecool.shop.products.Food;
+import hu.codecool.shop.products.milk.LongLifeMilk;
 
 public class ShopHasMilkTest {
 

@@ -1,4 +1,4 @@
-package hu.codecool.shop.exceptions;
+package hu.codecool.shop;
 
 public class ShopException extends Exception{
 

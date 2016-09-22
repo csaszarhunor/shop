@@ -1,8 +1,8 @@
-package hu.codecool.shop.product;
+package hu.codecool.shop.products.milk;
 
 import java.util.Date;
 
-import hu.codecool.shop.Milk;
+import hu.codecool.shop.products.Milk;
 
 public class SemiLongLifeMilk extends Milk {
 
